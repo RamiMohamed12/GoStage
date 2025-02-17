@@ -1,0 +1,46 @@
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    border-radius: 30px;
+    width: 90%;
+    margin: 10px auto; 
+    position:relative;
+}
+
+.navleft {
+    flex-grow: 1;
+}
+
+.input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: none;
+    background: #00e0bc;
+    color: black;
+    width: 150px;
+    outline: none; 
+}
+
+.navbar {
+    display:block;
+    gap: 10px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-weight: lighter;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: 0.3s;
+    margin: 0 10px;
+    position:relative;
+    z-index: 1;
+}
+.navbar a:hover, .navbar a.active {
+    background: rgba(28, 33, 57, 0.85);
+    color:#00e0bc;
+}
