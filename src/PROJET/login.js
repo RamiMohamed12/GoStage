@@ -1,24 +1,23 @@
-document.addEventListener("DOMContentLoaded",function () { 
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const loginButton = document.querySelector("button"); 
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value; // Corrected ID
 
-    loginButton.addEventListener("click",function () { 
-        const email = document.getElementById("email").value; 
-
-
-        if(!email) {
-            alert("Please enter a valid email address."); 
-            return; 
-        } 
-
-
-
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailPattern.test(email)){ 
-            alert("Please enter a valid email address."); 
-            return; 
-        } 
-        alert("Email is valid!"); 
-
+        fetch("login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = "dashboard.php";
+            } else {
+                document.getElementById("error-message").innerText = data.message;
+            }
+        })
+        .catch(error => console.error("Error:", error));
     });
 });
