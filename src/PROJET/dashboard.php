@@ -1,6 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION["admin"])) {
+// Check for both user session and correct role
+if (!isset($_SESSION["user"]) || $_SESSION["role"] !== "admin") {
     header("Location: login.html");
     exit;
 }
@@ -32,7 +33,7 @@ if (!isset($_SESSION["admin"])) {
     </style>
 </head>
 <body>
-    <h1>Welcome, <?php echo htmlspecialchars($_SESSION["admin"]["name"]); ?>!</h1>
+    <h1>Welcome, <?php echo htmlspecialchars($_SESSION["user"]["email"]); ?>!</h1>
 
     <div class="button-container">
         <a href="studentadd.php" class="button">Go to Student Add</a>

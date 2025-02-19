@@ -1,29 +1,29 @@
-<?php
-session_start();
-require 'auth.php';
+<?php 
+require 'db.php'; 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $userType = $_POST["user_type"]; // This should be sent from your login form
+function loginUser($pdo, $email, $password) { 
+    // Try admin table first
+    $stmt = $pdo->prepare("SELECT *, 'admin' as user_type FROM admin WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $user = loginUser($pdo, $email, $password, $userType);
-
-    if ($user) {
-        // Store user data in session with their role
-        $_SESSION["user"] = $user;
-        $_SESSION["role"] = $user['role'];
-        
-        echo json_encode([
-            "success" => true,
-            "role" => $user['role'],
-            "message" => "Login successful"
-        ]);
-    } else {
-        echo json_encode([
-            "success" => false, 
-            "message" => "Invalid credentials"
-        ]);
+    if (!$user) {
+        // Try student table
+        $stmt = $pdo->prepare("SELECT *, 'student' as user_type FROM student WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    if (!$user) {
+        // Try pilot table
+        $stmt = $pdo->prepare("SELECT *, 'pilot' as user_type FROM pilot WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    if ($user && password_verify($password, $user['password'])) { 
+        return $user; 
+    }
+    return false; 
 }
 ?>
