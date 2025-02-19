@@ -1,0 +1,83 @@
+body {
+    font-family: arial, sans-serif;
+    background-color: #010F17;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    margin:0;
+}
+
+.container {
+    background : rgba(224, 226, 240, 0.85);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 10000px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+h2 {
+    color:#002850;
+    font-size: 48px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    margin-bottom: 10px;
+}
+
+.form label {
+    color:#002850;
+    width:45%;
+    font-weight: lighter;
+    margin: 10px;
+
+}
+
+.form input, .form textarea {
+    width:90%;
+    padding: 10px 0px;
+    border: none;
+    border-radius: 5px;
+    background: #f3f3f3;
+}
+
+.form textarea {
+    height: 60px;
+    resize: none;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.submit button {
+    background-color: #54fbdc;
+    color:#002850;
+    border: none;
+    margin-top: 10px;
+    padding: 10px 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit button:hover {
+    background-color: #002850;
+    color: #54fbdc;
+}
