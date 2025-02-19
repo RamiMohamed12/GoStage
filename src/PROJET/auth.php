@@ -1,22 +1,29 @@
-<?php 
-require 'db.php'; 
+<?php
+session_start();
+require 'auth.php';
 
-function loginUser($pdo, $email, $password, $userType) { 
-    // Validate user type
-    $allowedTables = ['admin', 'student', 'pilote'];
-    if (!in_array($userType, $allowedTables)) {
-        return false;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $userType = $_POST["user_type"]; // This should be sent from your login form
+
+    $user = loginUser($pdo, $email, $password, $userType);
+
+    if ($user) {
+        // Store user data in session with their role
+        $_SESSION["user"] = $user;
+        $_SESSION["role"] = $user['role'];
+        
+        echo json_encode([
+            "success" => true,
+            "role" => $user['role'],
+            "message" => "Login successful"
+        ]);
+    } else {
+        echo json_encode([
+            "success" => false, 
+            "message" => "Invalid credentials"
+        ]);
     }
-
-    $stmt = $pdo->prepare("SELECT * FROM " . $userType . " WHERE email = ?"); 
-    $stmt->execute([$email]); 
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($user && password_verify($password, $user['password'])) { 
-        // Add the user type to the result
-        $user['role'] = $userType;
-        return $user; 
-    }
-    return false; 
 }
 ?>

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch("login.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+            body: email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}
         })
         .then(response => response.json())
         .then(data => {
